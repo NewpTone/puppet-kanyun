@@ -13,6 +13,9 @@ class kanyun {
     refreshonly         => true,
     subscribe           => [ Apt::Source["sws_v2"]],
     logoutput           => true,
+  }
+ 
+  file { '/etc/kanyun/kanyun.conf':
+        mode    => '0600',
   } 
-  
 }
