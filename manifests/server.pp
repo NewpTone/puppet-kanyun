@@ -10,8 +10,8 @@ class kanyun::server(
   } 
   
   kanyun_config {
-        'server/host': value => $host;
-	'server/port': value => $port;
-	'server/db_host':  value => $db_host;
-	'server/log'    :  value => $log;
+    'server/host':      value => $host;
+	'server/port':      value => $port;
+	'server/db_host':   value => $db_host;
+	'server/log'    :   value => $log;
  }

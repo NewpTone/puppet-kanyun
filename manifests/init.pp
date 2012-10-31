@@ -15,7 +15,11 @@ class kanyun {
     logoutput           => true,
   }
  
-  file { '/etc/kanyun/kanyun.conf':
-        mode    => '0600',
-  } 
+  #file { '/etc/kanyun/kanyun.conf':
+  #      mode    => '0600',
+  #}
+
+  package { 'kanyun-common':
+      ensure    => present,
+  }
 }
