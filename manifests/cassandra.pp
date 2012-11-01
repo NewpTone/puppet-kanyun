@@ -4,5 +4,4 @@ class kanyun::cassandra {
 	  logoutput => true ,
 	  require => Class['cassandra'],
   }
-
 }

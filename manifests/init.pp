@@ -4,19 +4,20 @@ class kanyun(
 	$nova_db_passwd			= 'nova',
 	$nova_db_host			= '127.0.0.1',
 	$nova_db_name			= 'nova',
+	$sql_connection			= '',
 # Default setting
 	$listen					= '0.0.0.0',
 	$host					= '127.0.0.1',
 	$memcache				= '127.0.0.1:11211',
 # Server setting
 	$server_host			= '*',
-	$server_db_host			= '127.0.0.1',
+	$db_host			    = '127.0.0.1',
 	$server_log				= '/var/log/kanyun/kanyun-server.log',
 # Worker setting
-	$id						= 'worker1',
+	$worker_id				= 'worker1',
 	$worker_timeout			= '60',
 	$dataserver_host		= '127.0.0.1',
-    $worker_log				= '/var/log/kanyun/kanyun-worker.log'	
+    $worker_log				= '/var/log/kanyun/kanyun-worker.log',
 # filter:auth setting
 	$auth_host				= '0.0.0.0',
 	$admin_token,
@@ -38,6 +39,10 @@ class kanyun(
     logoutput           => true,
   }
 
+  package { 'kanyun-common':
+	ensure	=> present,
+  }
+ 
   file { '/etc/kanyun':
     ensure  => directory,
     owner   => 'kanyun',
@@ -55,7 +60,7 @@ class kanyun(
 #Config set 
 	kanyun::config {'DEFAULT':
 		config => {
-			sql_connection  => "mysql://${nova_db_username}:${nova_db_passwd}@${nova_db_host}/${nova_db_name}",
+			sql_connection  => $sql_connection,
 		    listen			=> $listen,	
 			host			=> $host,
 			memcache		=> $memcache,
@@ -65,17 +70,17 @@ class kanyun(
 	kanyun::config {'server':
 		config => {
 			host			=> $server_host,
-			db_host			=> $server_db_host,
+			db_host			=> $db_host,
 			log				=> $server_log,
 			},
 			order	=> '02',
 	}
 	kanyun::config {'worker':
 		config => {
-			id				=> $id,
+			id				=> $worker_id,
 			worker_timeout	=> $worker_timeout,
 			dataserver_host	=> $dataserver_host,
-			worker_log		=> $worker_log,
+			log				=> $worker_log,
 			},
 			order	=> '03',
 	}		
