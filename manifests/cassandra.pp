@@ -6,9 +6,13 @@ class kanyun::cassandra {
 			path => '/usr/bin',
 			require => Package['python-pip'],
 	}
-    exec {'python /etc/puppet/modules/cassandra/files/init_cassandra_db.py':
-      path => '/usr/bin',
-	  logoutput => true ,
+	file {'/tmp/init_cassandra_db.py':
+		ensure => present,
+		source => 'puppet:///modules/kanyun/init_cassandra_db.py'
+}
+    exec {'python /tmp/init_cassandra_db.py':
+		path		=> '/usr/bin',
+		logoutput => true ,
   }
-	Exec['pip install pycassa'] ~> Exec['python /etc/puppet/modules/cassandra/files/init_cassandra_db.py']
+	File['/tmp/init_cassandra_db.py'] ~> Exec['pip install pycassa'] ~> Exec['python /tmp/init_cassandra_db.py']
 }
