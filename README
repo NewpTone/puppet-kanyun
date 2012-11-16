@@ -1,3 +1,5 @@
-=Introduction=
+Introduction
+=========================
+
 A Puppet module for kanyun. 
-Author: Yu xingchao
+kanyun is a monitor system used in Openstack.
