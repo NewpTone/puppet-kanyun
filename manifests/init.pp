@@ -6,31 +6,34 @@ class kanyun(
 	$nova_db_name			= 'nova',
 	$sql_connection			= '',
 # Default setting
-	$listen					= '0.0.0.0',
-	$host					= '127.0.0.1',
+	$api_listen				= '0.0.0.0',
+	$api_listen_port		= '127.0.0.1',
+    $api_paste_config       = '/etc/kanyun/api-paste.ini',
 	$memcache				= '127.0.0.1:11211',
 # Server setting
-	$server_host			= '*',
+	$host       			= '*',
+    $port                   = '5551',
 	$db_host			    = '127.0.0.1',
-	$server_log				= '/var/log/kanyun/kanyun-server.log',
 # Worker setting
-	$worker_id				= 'worker1',
+	$id	        			= 'worker1',
 	$worker_timeout			= '60',
 	$dataserver_host		= '127.0.0.1',
-    $worker_log				= '/var/log/kanyun/kanyun-worker.log',
+    $dataserver_port        = '5551',
 # filter:auth setting
 	$auth_host				= '0.0.0.0',
-	$admin_token,
+    $admin_tenant_name      = 'service',
+    $admin_user             = 'kanyun',
+    $admin_password         = 'kanyun',
 ){
   include 'concat::setup'
 
   package { 'kanyun-common':
 	ensure	=> present,
-	require => Package['sws-common']
+#	require => Package['sws-common']
   }
-  package { 'sws-common':
-	ensure  => present,
- }
+#  package { 'sws-common':
+#	ensure  => present,
+# }
   file { '/etc/kanyun':
     ensure  => directory,
     owner   => 'kanyun',
@@ -48,18 +51,20 @@ class kanyun(
 #Config set 
 	kanyun::config {'DEFAULT':
 		config => {
-			sql_connection  => $sql_connection,
-		    listen			=> $listen,	
-			host			=> $host,
-			memcache		=> $memcache,
+			sql_connection      => $sql_connection,
+		    api_listen	    	=> $api_listen,	
+		    api_listen_port	    => $api_listen_port,	
+			api_paste_config	=> $host,
+            sql_connection      => $sql_connection,
+			memcache		    => $memcache,
 			},
 			order	=> '01',
 	}	
 	kanyun::config {'server':
 		config => {
 			host			=> $server_host,
-			db_host			=> $db_host,
-			log				=> $server_log,
+			port			=> $host,
+            db_host         => $db_host,
 			},
 			order	=> '02',
 	}
@@ -68,15 +73,7 @@ class kanyun(
 			id				=> $worker_id,
 			worker_timeout	=> $worker_timeout,
 			dataserver_host	=> $dataserver_host,
-			log				=> $worker_log,
 			},
 			order	=> '03',
 	}		
-	kanyun::config {'filter_auth':
-		config => {
-			auth_host		=> $auth_host,
-			admin_token		=> $admin_token,
-			},
-			order	=> '04',
-	}
  }
