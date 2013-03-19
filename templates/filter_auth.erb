@@ -1,13 +1,26 @@
-[filter:auth]
+[composite:kanyun_api]
+use = egg:Paste#urlmap
+/v2.0: kanyun_composite
+
+[composite:kanyun_composite]
+use = call:kanyun.service:kanyun_pipeline_factory
+keystone = faultwrap authtoken policy main
+
+[filter:faultwrap]
+paste.filter_factory = kanyun.service:FaultWrapper.factory
+
+[filter:authtoken]
 paste.filter_factory = keystone.middleware.auth_token:filter_factory
 auth_host = <%=auth_host%>
 auth_port = 35357
 auth_protocol = http
-admin_token = <%=admin_token%>
+admin_tenant_name = <%= admin_tenant_name %>
+admin_user = <%= admin_user %>
+admin_password = <%= admin_password %>
+signing_dir = /var/cache/kanyun
 
-[composite:kanyun_composite]
-use = call:kanyun.server.rest_api_service:kanyun_pipline_factory
-keystone = main
+[filter:policy]
+paste.filter_factory = kanyun.service:Policy.factory
 
 [app:main]
 paste.app_factory = kanyun.server.rest_api_service:kanyun_service_app_factory

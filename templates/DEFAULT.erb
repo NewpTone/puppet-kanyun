@@ -1,9 +1,10 @@
 # ATTENTION:Put this file to /etc/kanyun/kanyun.conf
 [DEFAULT]
-# Example: sql_connection = mysql://username:password@127.0.0.1/nova
+verbose = True
+logdir = /var/log/kanyun
+
+api_listen = <%= api_listen %>
+api_listen_port = <%= api_listen_port %>
+api_paste_config = <%= api_paste_config %>
 sql_connection = <%=sql_connection %>
-listen = <%=listen%> 
-host = <%=host%> 
-kanyun_composite_port = 8100
 memcache = <%=memcache%> 
-loglevel = INFO
