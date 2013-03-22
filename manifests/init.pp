@@ -7,7 +7,7 @@ class kanyun(
 	$sql_connection			= '',
 # Default setting
 	$api_listen				= '0.0.0.0',
-	$api_listen_port		= '127.0.0.1',
+	$api_listen_port		= '8100',
     $api_paste_config       = '/etc/kanyun/api-paste.ini',
 	$memcache				= '127.0.0.1:11211',
 # Server setting
