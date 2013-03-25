@@ -1,6 +1,6 @@
 class kanyun::api(
-    $auth_host          = '0.0.0.0',
-    $admin_tenant_name  = 'service',
+    $auth_host          = '127.0.0.1',
+    $admin_tenant       = 'services',
     $admin_user         =  'kanyun',
     $admin_password     =  'kanyun',
     )

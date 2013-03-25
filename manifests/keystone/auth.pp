@@ -23,7 +23,7 @@ class kanyun::keystone::auth(
   $public_address     = '127.0.0.1',
   $admin_address      = '127.0.0.1',
   $internal_address   = '127.0.0.1',
-  $port               = '5556',
+  $port               = '8100',
   $region             = 'RegionOne'
 ) {
 

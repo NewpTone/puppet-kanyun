@@ -1,5 +1,5 @@
 class kanyun::cassandra {
-	@package {'python-pip':
+	package {'python-pip':
 			ensure => present,
 	}
 	exec { 'pip install pycassa':

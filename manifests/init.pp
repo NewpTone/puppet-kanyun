@@ -21,7 +21,7 @@ class kanyun(
     $dataserver_port        = '5551',
 # filter:auth setting
 	$auth_host				= '0.0.0.0',
-    $admin_tenant_name      = 'service',
+    $admin_tenant           = 'services',
     $admin_user             = 'kanyun',
     $admin_password         = 'kanyun',
 ){
